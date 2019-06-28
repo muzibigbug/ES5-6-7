@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05_Function扩展</title>
+</head>
+<body>
+<!--
+  函数才有this，对象无。call/apply/bind参数是传递给这个函数的,改变this后可以使用这个this所对应对象中的属性
+1. Function.prototype.bind(obj) :
+  * 作用: 将函数内的this绑定为obj, 并将函数返回
+2. 面试题: 区别bind()与call()和apply()?
+  * 都能指定函数中的this
+  * call()/apply()是立即调用函数
+  * bind()是将函数返回
+-->
+<script type="text/javascript">
+function fun(age,name) {
+  console.log(this,age,name,this.sex);
+}
+
+//call apply 除了强制指定this外  会自动调用当前的函数。
+//bind绑定完this不会立即调用当前函数，而是将当前的函数返回。
+var obj = {sex:"男"};
+fun.call(obj,18,'tom');
+fun.apply(obj,[19,'kity']);
+fun.bind(obj,20,'mike')();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03_Object扩展</title>
+</head>
+<body>
+<!--
+ES5给Object扩展了一些静态方法, 常用的2个:
+1. Object.create(prototype, [descriptors])
+  * 作用: 以指定对象为原型创建新的对象
+  * 为新的对象指定新的属性, 并对属性进行描述
+    value : 指定值
+    writable : 标识当前属性值是否是可修改的, 默认为 false
+2. Object.defineProperties(object, descriptors)
+  * 作用: 为指定对象定义扩展多个属性
+    * get ：用来获取当前属性值得回调函数
+    * set ：修改当前属性值得触发的回调函数，并且实参即为修改后的值
+
+   * 存取器属性：setter,getter一个用来存值，一个用来取值
+-->
+<script type="text/javascript">
+  var obj1 = {name:'tom',age:18};
+  var obj2 = {};
+  // obj2 = Object.create(obj1,{
+  //   gender:{
+  //     value:'male',
+  //     writable:true
+  //   }
+  // });
+  // console.log(obj2);
+
+  Object.defineProperties(obj2,{
+    fullName: {
+      get : function() { //当你获取当前扩展属性值的时候，返回的就是当前属性的值
+        console.log('get()');
+        return this.firstName + ' ' + this.lastName;
+      },
+      set : function(msg) { //监视当前属性值，当属性值发生改变的时候自动调用。
+        console.log(msg);
+        var names = msg.split(' ');
+        this.firstName = names[0];
+        this.lastName = names[1];
+      }
+    }
+  });
+  obj2.fullName = "muzidigbig Lee";
+  console.log(obj2);
+  console.log(obj2.firstName);
+
+    /*
+    2等同于下面扩展对象的方式
+    */
+    var obj4 = {
+        username: 'honghong',
+        age:24,
+        get usernameAge() {
+            return this.username + " " + this.age;
+        },
+        set usernameAge(msg) {
+            var names = msg.split(' ');
+            this.username = names[0];
+            this.age = names[1];
+        }
+    };
+    obj4.usernameAge = "guanyu 22"
+    console.log(obj4);
+    console.log(obj4.username);
+
+
+</script>
+</body>
+</html>
